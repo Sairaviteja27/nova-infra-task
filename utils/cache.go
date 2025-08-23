@@ -42,6 +42,6 @@ func (c *Cache) Get(addr string) (types.Result, bool) {
 
 func (c *Cache) Set(addr string, val types.Result) {
 	c.mu.Lock()
+	defer c.mu.Unlock()
 	c.data[addr] = cacheEntry{val: val, expiry: time.Now().Add(c.ttl)}
-	c.mu.Unlock()
 }
